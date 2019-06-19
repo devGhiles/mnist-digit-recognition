@@ -19,7 +19,6 @@ class Encoder(ABC):
         return X, y
 
 
-
 class CNNKerasEncoder(Encoder):
 
     def encode_X(self, df):
