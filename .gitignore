@@ -1,2 +1,4 @@
 .ipynb_checkpoints/*
 data/*.csv
+tests.ipynb
+pipeline/core/__pycache__/*
