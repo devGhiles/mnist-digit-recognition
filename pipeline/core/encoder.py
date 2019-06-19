@@ -1,4 +1,26 @@
-class Encoder(object):
+from abc import ABC, abstractmethod
+
+from keras.utils.np_utils import to_categorical
+
+
+class Encoder(ABC):
+
+    @abstractmethod
+    def encode_X(self, df):
+        pass
+
+    @abstractmethod
+    def encode_y(df):
+        pass
+
+    def encode_X_and_y(df):
+        X = encode_X(df)
+        y = encode_y(df)
+        return X, y
+
+
+
+class CNNKerasEncoder(Encoder):
 
     def encode_X(self, df):
         try:
@@ -10,8 +32,12 @@ class Encoder(object):
         
         # normalize the values between 0.0 and 1.0
         X = X / 255.0
+
+        # reshape the image in 3D for keras input (28x28, 1 canal)
+        X = X.reshape(-1, 28, 28, 1)
         
         return X
 
-    def encode_y(self, df):
-        return df['label'].values
+    def encode_y(df):
+        y = df['label'].values
+        return to_categorical(y, num_classes=10)
