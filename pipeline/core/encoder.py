@@ -13,10 +13,10 @@ class Encoder(ABC):
         pass
 
     @abstractmethod
-    def encode_y(df):
+    def encode_y(self, df):
         pass
 
-    def encode_X_and_y(df):
+    def encode_X_and_y(self, df):
         X = encode_X(df)
         y = encode_y(df)
         return X, y
@@ -43,6 +43,6 @@ class CNNKerasEncoder(Encoder):
         
         return X
 
-    def encode_y(df):
+    def encode_y(self, df):
         y = df['label'].values
         return to_categorical(y, num_classes=10)
