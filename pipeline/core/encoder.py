@@ -5,6 +5,9 @@ from keras.utils.np_utils import to_categorical
 
 class Encoder(ABC):
 
+    def __init__(self):
+        super().__init__()
+
     @abstractmethod
     def encode_X(self, df):
         pass
@@ -20,6 +23,9 @@ class Encoder(ABC):
 
 
 class CNNKerasEncoder(Encoder):
+
+    def __init__(self):
+        super().__init__()
 
     def encode_X(self, df):
         try:
