@@ -17,8 +17,8 @@ class Encoder(ABC):
         pass
 
     def encode_X_and_y(self, df):
-        X = encode_X(df)
-        y = encode_y(df)
+        X = self.encode_X(df)
+        y = self.encode_y(df)
         return X, y
 
 
