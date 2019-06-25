@@ -33,11 +33,12 @@ class Model(ABC):
 
 class CNNKerasModel(Model):
 
-    def __init__(self):
+    def __init__(self, conv_dropout=0.25, dense_dropout=0.5):
         super().__init__()
 
         # set up a few hyperparameters
-        self._lr = 0.001
+        self._conv_dropout = conv_dropout
+        self._dense_dropout = dense_dropout
 
         # set up the model architecture
         self._build_model()
@@ -46,26 +47,26 @@ class CNNKerasModel(Model):
         self._model = Sequential()
 
         self._model.add(Conv2D(filters=32, kernel_size=(5, 5), padding='same',
-                         activation='relu', input_shape=(28, 28, 1)))
+            activation='relu', input_shape=(28, 28, 1)))
         self._model.add(Conv2D(filters=32, kernel_size=(5, 5), padding='same', activation='relu'))
         self._model.add(MaxPool2D(pool_size=(2, 2)))
-        self._model.add(Dropout(0.25))
+        self._model.add(Dropout(self._conv_dropout))
 
         self._model.add(Conv2D(filters=64, kernel_size=(3, 3), padding='same', activation='relu'))
         self._model.add(Conv2D(filters=64, kernel_size=(3, 3), padding='same', activation='relu'))
         self._model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
-        self._model.add(Dropout(0.25))
+        self._model.add(Dropout(self._conv_dropout))
 
         self._model.add(Flatten())
         self._model.add(Dense(256, activation='relu'))
-        self._model.add(Dropout(0.5))
+        self._model.add(Dropout(self._dense_dropout))
         self._model.add(Dense(10, activation='softmax'))
 
         return None
 
-    def train(self, X, y, X_valid=None, y_valid=None, epochs=10, batch_size=16, verbose=0):
+    def train(self, X, y, X_valid=None, y_valid=None, epochs=10, batch_size=16, lr=0.001, verbose=0):
         # compile the model
-        optimizer = RMSprop(lr=self._lr)
+        optimizer = RMSprop(lr=lr)
         self._model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
         # train the model
@@ -74,10 +75,10 @@ class CNNKerasModel(Model):
             'epochs': epochs,
             'verbose': verbose
         }
-        if X_valid and y_valid:
+        if X_valid is not None and y_valid is not None:
             kwargs['validation_data'] = (X_valid, y_valid)
 
-        history = self._model.fit(X_train, y_train, **kwargs)
+        history = self._model.fit(X, y, **kwargs)
 
         return history.history
 
