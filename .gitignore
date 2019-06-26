@@ -1,4 +1,6 @@
 .ipynb_checkpoints/*
 data/*.csv
+data/*.csv.*
 tests.ipynb
 pipeline/core/__pycache__/*
+*.model
