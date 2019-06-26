@@ -23,11 +23,11 @@ class Model(ABC):
         pass
 
     @abstractmethod
-    def save(self, file_path):
+    def save(self, filepath):
         pass
 
     @abstractmethod
-    def load(self, file_path):
+    def load(self, filepath):
         pass
 
 
@@ -89,8 +89,8 @@ class CNNKerasModel(Model):
     def predict(self, X):
         return self._model.predict(X)
 
-    def save(self, file_path):
-        self._model.save_weights(file_path)
+    def save(self, filepath):
+        self._model.save_weights(filepath)
 
-    def load(self, file_path):
-        self._model.load_weights(file_path)
+    def load(self, filepath):
+        self._model.load_weights(filepath)
