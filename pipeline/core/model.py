@@ -4,6 +4,8 @@ from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPool2D
 from keras.models import Sequential
 from keras.optimizers import RMSprop
 
+from .training_report import CNNKerasTrainingReport
+
 
 class Model(ABC):
 
@@ -50,16 +52,19 @@ class CNNKerasModel(Model):
             activation='relu', input_shape=(28, 28, 1)))
         self._model.add(Conv2D(filters=32, kernel_size=(5, 5), padding='same', activation='relu'))
         self._model.add(MaxPool2D(pool_size=(2, 2)))
-        self._model.add(Dropout(self._conv_dropout))
+        if self._conv_dropout != 0.0:
+            self._model.add(Dropout(self._conv_dropout))
 
         self._model.add(Conv2D(filters=64, kernel_size=(3, 3), padding='same', activation='relu'))
         self._model.add(Conv2D(filters=64, kernel_size=(3, 3), padding='same', activation='relu'))
         self._model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
-        self._model.add(Dropout(self._conv_dropout))
+        if self._conv_dropout != 0.0:
+            self._model.add(Dropout(self._conv_dropout))
 
         self._model.add(Flatten())
         self._model.add(Dense(256, activation='relu'))
-        self._model.add(Dropout(self._dense_dropout))
+        if self._dense_dropout != 0.0:
+            self._model.add(Dropout(self._dense_dropout))
         self._model.add(Dense(10, activation='softmax'))
 
         return None
@@ -80,7 +85,13 @@ class CNNKerasModel(Model):
 
         history = self._model.fit(X, y, **kwargs)
 
-        return history.history
+        training_report = CNNKerasTrainingReport()
+        training_report.loss = history.history['loss']
+        training_report.val_loss = history.history['val_loss']
+        training_report.acc = history.history['acc']
+        training_report.val_acc = history.history['val_acc']
+
+        return training_report
 
     def evaluate(self, X, y):
         loss, accuracy = self._model.evaluate(X, y)
