@@ -3,7 +3,7 @@ import sys
 
 import pandas as pd
 
-from pipeline.core import CNNKerasModel, CNNKerasEncoder
+from core import CNNKerasModel, CNNKerasEncoder
 
 
 model_type_to_model_class = {
