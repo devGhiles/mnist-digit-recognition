@@ -1,0 +1,11 @@
+{
+    "model_hyperparameters": {
+        "conv_dropout": 0.0,
+        "dense_dropout": 0.0
+    },
+    "training_parameters": {
+        "epochs": 1,
+        "batch_size": 32,
+        "verbose": 1
+    }
+}
