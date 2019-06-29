@@ -28,8 +28,6 @@ def main(model_type, train_filepath, valid_filepath, model_filepath,
     print('Read training and validation data...')
     train_df = pd.read_csv(train_filepath, sep=',', encoding='utf-8')
     valid_df = pd.read_csv(valid_filepath, sep=',', encoding='utf-8')
-    train_df = train_df.iloc[:1000]
-    valid_df = valid_df.iloc[:100]
 
     print('Encode the training and validation data...')
     encoder = encoder_class()
