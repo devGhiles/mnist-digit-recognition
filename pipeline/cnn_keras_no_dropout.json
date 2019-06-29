@@ -4,7 +4,7 @@
         "dense_dropout": 0.0
     },
     "training_parameters": {
-        "epochs": 1,
+        "epochs": 20,
         "batch_size": 32,
         "verbose": 1
     }
