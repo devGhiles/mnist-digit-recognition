@@ -6,27 +6,32 @@ import pandas as pd
 from core import CNNKerasModel, CNNKerasEncoder
 
 
-model_type_to_model_class = {
+model_type_to_model_cls = {
     'cnn': CNNKerasModel
+}
+
+model_type_to_encoder_cls = {
+    'cnn': CNNKerasEncoder
 }
 
 
 def main(model_type, model_filepath, test_filepath, submission_filepath):
-    # get the model class
+    # get the model class and the encoder class from the model type
     try:
-        model_class = model_type_to_model_class[model_type]
+        model_cls = model_type_to_model_cls[model_type]
+        encoder_cls = model_type_to_encoder_cls[model_type]
     except KeyError:
         print('Unrecognized model type: {}'.format(model_type), file=sys.stderr)
+        return
 
     print('Load the model...')
-    model = model_class()
-    model.load(model_filepath)
+    model = model_cls.load(model_filepath)
 
     print('Read the test data...')
     test_df = pd.read_csv(test_filepath, sep=',', encoding='utf-8')
 
     print('Encode the test data...')
-    encoder = CNNKerasEncoder()
+    encoder = encoder_cls()
     X_test = encoder.encode_X(test_df)
 
     print('Make the predictions...')
