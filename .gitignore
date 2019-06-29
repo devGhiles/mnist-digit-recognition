@@ -4,3 +4,4 @@ data/*.csv.*
 tests.ipynb
 pipeline/core/__pycache__/*
 *.model
+*.report

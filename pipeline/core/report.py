@@ -3,7 +3,11 @@ import json
 from abc import ABC, abstractmethod
 
 
-class TrainingReport(ABC):
+class Report(ABC):
+
+    @classmethod
+    def load(cls, filepath):
+        return cls.load(filepath)
 
     def __init__(self):
         super().__init__()
@@ -12,12 +16,21 @@ class TrainingReport(ABC):
     def save(self, filepath):
         pass
 
-    @abstractmethod
-    def load(self, filepath):
-        pass
 
+class CNNKerasTrainingReport(Report):
 
-class CNNKerasTrainingReport(TrainingReport):
+    @staticmethod
+    def load(filepath):
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json_obj = json.load(f)
+
+        report = CNNKerasTrainingReport()
+        report.loss = json_obj['loss']
+        report.val_loss = json_obj['val_loss']
+        report.acc = json_obj['acc']
+        report.val_acc = json_obj['val_acc']
+
+        return report
 
     def __init__(self):
         super().__init__()
@@ -35,16 +48,5 @@ class CNNKerasTrainingReport(TrainingReport):
         }
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(json_obj, f, ensure_ascii=False)
-
-        return None
-
-    def load(self, filepath):
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json_obj = json.load(f)
-
-        self.loss = json_obj['loss']
-        self.val_loss = json_obj['val_loss']
-        self.acc = json_obj['acc']
-        self.val_acc = json_obj['val_acc']
 
         return None
