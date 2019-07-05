@@ -1,6 +1,7 @@
+from abc import ABC, abstractmethod
 import json
 
-from abc import ABC, abstractmethod
+import matplotlib.pyplot as plt
 
 
 class Report(ABC):
@@ -21,7 +22,7 @@ class CNNKerasTrainingReport(Report):
 
     @staticmethod
     def load(filepath):
-        with open(filepath, 'w', encoding='utf-8') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             json_obj = json.load(f)
 
         report = CNNKerasTrainingReport()
@@ -49,4 +50,28 @@ class CNNKerasTrainingReport(Report):
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(json_obj, f, ensure_ascii=False)
 
+        return None
+
+    def display_loss_curve(self):
+        epochs = range(1, len(self.loss) + 1)
+        plt.plot(epochs, self.loss, color='b', label='loss')
+        plt.plot(epochs, self.val_loss, color='r', label='val_loss')
+        plt.legend()
+        plt.grid()
+        plt.title('Training and validation loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.show()
+        return None
+
+    def display_acc_curve(self):
+        epochs = range(1, len(self.acc) + 1)
+        plt.plot(epochs, self.acc, color='b', label='acc')
+        plt.plot(epochs, self.val_acc, color='r', label='val_acc')
+        plt.legend()
+        plt.grid()
+        plt.title('Training and validation accuracy')
+        plt.xlabel('Epoch')
+        plt.ylabel('Accuracy')
+        plt.show()
         return None
