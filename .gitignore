@@ -6,3 +6,4 @@ pipeline/core/__pycache__/*
 *.model
 *.report
 pipeline/*.json
+valid_predictions.csv
