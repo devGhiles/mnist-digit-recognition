@@ -211,8 +211,8 @@ class FeedForwardNeuralNetworkModel(KerasModel):
     def _build_model(self):
         self._model = Sequential()
 
-        self._model.add(Dense(n_units_in_hidden_layers, input_dim=self.input_dim))
-        self._model.add(Activation(activation_function))
+        self._model.add(Dense(self.n_units_in_hidden_layers, input_dim=self.input_dim))
+        self._model.add(Activation(self.activation_function))
 
         for _ in range(self.n_hidden_layers - 1):
             self._model.add(Dense(self.n_units_in_hidden_layers))
