@@ -7,7 +7,7 @@ from keras.models import Sequential
 from keras.optimizers import RMSprop
 import numpy as np
 
-from .report import CNNKerasTrainingReport
+from .report import KerasTrainingReport
 
 
 class Model(ABC):
