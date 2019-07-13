@@ -25,7 +25,7 @@ class KerasTrainingReport(Report):
         with open(filepath, 'r', encoding='utf-8') as f:
             json_obj = json.load(f)
 
-        report = CNNKerasTrainingReport()
+        report = KerasTrainingReport()
         report.loss = json_obj['loss']
         report.val_loss = json_obj['val_loss']
         report.acc = json_obj['acc']
