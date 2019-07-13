@@ -46,3 +46,26 @@ class CNNKerasEncoder(Encoder):
     def encode_y(self, df):
         y = df['label'].values
         return to_categorical(y, num_classes=10)
+
+
+class FeedForwardNeuralNetworkEncoder(Encoder):
+
+    def __init__(self):
+        super().__init__()
+
+    def encode_X(self, df):
+        try:
+            df_without_label = df.drop(labels=['label'], axis=1)
+        except ValueError:
+            df_without_label = df
+
+        X = df_without_label.values
+        
+        # normalize the values between 0.0 and 1.0
+        X = X / 255.0
+        
+        return X
+
+    def encode_y(self, df):
+        y = df['label'].values
+        return to_categorical(y, num_classes=10)
