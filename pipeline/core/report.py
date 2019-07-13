@@ -18,7 +18,7 @@ class Report(ABC):
         pass
 
 
-class CNNKerasTrainingReport(Report):
+class KerasTrainingReport(Report):
 
     @staticmethod
     def load(filepath):
