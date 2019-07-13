@@ -3,16 +3,19 @@ import json
 
 import pandas as pd
 
-from core import CNNKerasEncoder, CNNKerasModel
+from core import CNNKerasEncoder, CNNKerasModel,\
+                 FeedForwardNeuralNetworkModel, FeedForwardNeuralNetworkEncoder
 
 
 model_type_to_model_class = {
-    'cnn': CNNKerasModel
+    'cnn': CNNKerasModel,
+    'ff': FeedForwardNeuralNetworkModel
 }
 
 
 model_type_to_encoder_class = {
-    'cnn': CNNKerasEncoder
+    'cnn': CNNKerasEncoder,
+    'ff': FeedForwardNeuralNetworkEncoder
 }
 
 
@@ -52,7 +55,7 @@ def main(model_type, train_filepath, valid_filepath, model_filepath,
 if __name__ == '__main__':
     # Create the cli arguments parser
     parser = argparse.ArgumentParser('Train a model and save it on disk along with its training report.')
-    parser.add_argument('model_type', choices=['cnn'], help='The type of the model.')
+    parser.add_argument('model_type', choices=model_type_to_model_class.keys(), help='The type of the model.')
     parser.add_argument('train_file', help='File path of the training file.')
     parser.add_argument('valid_file', help='File path of the validation file.')
     parser.add_argument('model_file', help='File path where to save the trained model.')
