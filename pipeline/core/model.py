@@ -182,8 +182,8 @@ class FeedForwardNeuralNetworkModel(KerasModel):
         # Set the weights and the hyperparameters
         model = FeedForwardNeuralNetworkModel(
             n_hidden_layers=json_obj['n_hidden_layers'],
-            n_units_in_hidden_layers=json_obj['n_hidden_layers'],
-            activation_function=json_obj['n_hidden_layers']
+            n_units_in_hidden_layers=json_obj['n_units_in_hidden_layers'],
+            activation_function=json_obj['activation_function']
         )
         model._model.set_weights(KerasModel._transform_lists_to_weights(json_obj['weights']))
 
