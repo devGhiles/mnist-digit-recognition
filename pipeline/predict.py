@@ -3,15 +3,18 @@ import sys
 
 import pandas as pd
 
-from core import CNNKerasModel, CNNKerasEncoder
+from core import CNNKerasModel, CNNKerasEncoder,\
+                 FeedForwardNeuralNetworkModel, FeedForwardNeuralNetworkEncoder
 
 
 model_type_to_model_cls = {
-    'cnn': CNNKerasModel
+    'cnn': CNNKerasModel,
+    'ff': FeedForwardNeuralNetworkModel
 }
 
 model_type_to_encoder_cls = {
-    'cnn': CNNKerasEncoder
+    'cnn': CNNKerasEncoder,
+    'ff': FeedForwardNeuralNetworkEncoder
 }
 
 
@@ -46,7 +49,7 @@ def main(model_type, model_filepath, test_filepath, submission_filepath):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Generate a submission file for a test dataset from a saved model.')
-    parser.add_argument('type', choices=['cnn'], help='Model type.')
+    parser.add_argument('type', choices=model_type_to_model_cls.keys(), help='Model type.')
     parser.add_argument('model_file', help='File path to the saved model.')
     parser.add_argument('test_file', help='File path to the test file.')
     parser.add_argument('submission_file', help='File path where to save the submission file.')
