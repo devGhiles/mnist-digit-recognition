@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import gzip
 import json
 
+from keras.callbacks import ModelCheckpoint
 from keras.layers import Activation, BatchNormalization, Conv2D, Dense, Dropout, Flatten, MaxPool2D
 from keras.models import Sequential
 from keras.optimizers import Adam, RMSprop
@@ -134,7 +135,7 @@ class CNNKerasModel(KerasModel):
 
         return None
 
-    def train(self, X, y, X_valid=None, y_valid=None, epochs=10, batch_size=16, lr=0.001, verbose=0):
+    def train(self, X, y, X_valid=None, y_valid=None, epochs=10, batch_size=16, lr=0.001, verbose=0, checkpoint_path=None):
         # Compile the model
         self._compile_model(lr)
 
@@ -144,8 +145,12 @@ class CNNKerasModel(KerasModel):
             'epochs': epochs,
             'verbose': verbose
         }
+
         if X_valid is not None and y_valid is not None:
             kwargs['validation_data'] = (X_valid, y_valid)
+
+        if checkpoint_path:
+            kwargs['callbacks'] = [ModelCheckpoint(filepath=checkpoint_path, verbose=verbose, save_best_only=True)]
 
         history = self._model.fit(X, y, **kwargs)
 
