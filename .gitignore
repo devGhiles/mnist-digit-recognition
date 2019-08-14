@@ -2,9 +2,8 @@
 data/*.csv
 data/*.csv.*
 tests.ipynb
-pipeline/core/__pycache__/*
+scripts/core/__pycache__/*
 *.model
 *.report
-pipeline/*.json
 valid_predictions.csv
 cnn_checkpoint.hdf5

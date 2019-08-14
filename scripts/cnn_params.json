@@ -1,0 +1,16 @@
+{
+    "model_hyperparameters": {
+        "filters_list": [32, 64],
+        "kernels_sizes": [5, 5],
+        "batch_normalization": true,
+        "n_dense_units": 128,
+        "conv_dropout": 0.4,
+        "dense_dropout": 0.4
+    },
+    "training_parameters": {
+        "epochs": 50,
+        "batch_size": 16,
+        "verbose": 1,
+        "checkpoint_path": "cnn_checkpoint.hdf5"
+    }
+}
