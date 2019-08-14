@@ -7,3 +7,4 @@ scripts/core/__pycache__/*
 *.report
 valid_predictions.csv
 cnn_checkpoint.hdf5
+cnn_keras.ipynb
