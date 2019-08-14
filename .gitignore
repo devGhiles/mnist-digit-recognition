@@ -7,3 +7,4 @@ pipeline/core/__pycache__/*
 *.report
 pipeline/*.json
 valid_predictions.csv
+cnn_checkpoint.hdf5
