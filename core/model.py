@@ -12,9 +12,11 @@ from .report import KerasTrainingReport
 
 
 class Model(ABC):
+    """Base class for the classification models."""
 
     @classmethod
     def load(cls, filepath):
+        """Load a model saved on disk using its save method."""
         return cls.load(filepath)
 
     def __init__(self):
@@ -22,22 +24,29 @@ class Model(ABC):
 
     @abstractmethod
     def train(self, X, y):
+        """Train the model using the given samples."""
         pass
 
     @abstractmethod
     def evaluate(self, X, y):
+        """Evaluate the model on the given samples."""
         pass
 
     @abstractmethod
     def predict(self, X):
+        """Return the probability distributions over all the output classes
+        for each given sample."""
         pass
 
     @abstractmethod
     def save(self, filepath):
+        """Save the model on disk."""
         pass
 
 
 class KerasModel(Model):
+    """Base class for all Keras models. Implements utility functions
+    often used by models implemented in Keras."""
 
     @staticmethod
     def _transform_weights_to_lists(weights):
