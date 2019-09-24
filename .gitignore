@@ -1,7 +1,7 @@
 .ipynb_checkpoints/*
 data/*
 tests.ipynb
-scripts/core/__pycache__/*
+core/__pycache__/*
 *.model
 *.report
 valid_predictions.csv
