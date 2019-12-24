@@ -12,8 +12,9 @@ Data exploration and analysis is a crucial step for solving Machine Learning pro
 ## Train a Machine Learning model
 The script **train.py** allows to train a model. Two models are implemented: a feedforward neural network and a convolutional neural network. The two models are defined in **core/model.py** by the classes `FeedForwardNeuralNetworkModel` and `CNNKerasModel` respectively.
 Here is the command for training a CNN model:
-
-    python train.py cnn data/train.csv data/valid.csv cnn.model cnn.report cnn_params.json
+```
+python train.py cnn data/train.csv data/valid.csv cnn.model cnn.report cnn_params.json
+```
 where *"cnn"* is the type of the model (can be *"cnn"* or *"ff"*), *data/train.csv* is the path of the training data, *data/valid.csv* is the path of the validation data, *cnn.model* is the path where the trained model is saved, *cnn.report* is the path where the report of the training is saved, and *cnn_params.json* defines the hyperparameters of the CNN. An example of *cnn_params.json* is included in the repository.
 The command `python train.py -h` provides more information about the **train.py** script.
 
