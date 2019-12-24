@@ -21,6 +21,7 @@ model_type_to_encoder_class = {
 
 def main(model_type, train_filepath, valid_filepath, model_filepath,
     training_report_filepath, model_hyperparameters, training_parameters):
+    # Get the classes corresponding to the model type
     try:
         model_class = model_type_to_model_class[model_type]
         encoder_class = model_type_to_encoder_class[model_type]
@@ -28,15 +29,18 @@ def main(model_type, train_filepath, valid_filepath, model_filepath,
         print('Unknown model type: {}'.format(model_type))
         return
 
+    # Read the data
     print('Read training and validation data...')
     train_df = pd.read_csv(train_filepath, sep=',', encoding='utf-8')
     valid_df = pd.read_csv(valid_filepath, sep=',', encoding='utf-8')
 
+    # Encode the data
     print('Encode the training and validation data...')
     encoder = encoder_class()
     X_train, y_train = encoder.encode_X_and_y(train_df)
     X_valid, y_valid = encoder.encode_X_and_y(valid_df)
 
+    # Launch the training
     print('Build and train the model...')
     model = model_class(**model_hyperparameters)
     training_report = model.train(X_train,
@@ -45,9 +49,11 @@ def main(model_type, train_filepath, valid_filepath, model_filepath,
                                   y_valid=y_valid,
                                   **training_parameters)
 
+    # Save the trained model on disk
     print('Save the trained model...')
     model.save(model_filepath)
 
+    # Save the training report on disk
     print('Save the training report...')
     training_report.save(training_report_filepath)
 

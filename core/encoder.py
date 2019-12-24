@@ -4,9 +4,15 @@ from keras.utils.np_utils import to_categorical
 
 
 class Encoder(ABC):
+    """Base class for all the data encoders.
+
+    An encoder object transforms the original data which is a
+    pandas DataFrame into a format suitable for use by the
+    underlying model.
+    """
 
     def __init__(self):
-        super().__init__()
+        super(Encoder, self).__init__()
 
     @abstractmethod
     def encode_X(self, df):
@@ -23,16 +29,19 @@ class Encoder(ABC):
 
 
 class CNNKerasEncoder(Encoder):
+    """Encoder class for CNNKerasModel."""
 
     def __init__(self):
-        super().__init__()
+        super(CNNKerasEncoder, self).__init__()
 
     def encode_X(self, df):
+        # Remove the label from the data frame
         try:
             df_without_label = df.drop(labels=['label'], axis=1)
         except ValueError:
             df_without_label = df
 
+        # Transform the data frame into a numpy array
         X = df_without_label.values
         
         # normalize the values between 0.0 and 1.0
@@ -44,21 +53,27 @@ class CNNKerasEncoder(Encoder):
         return X
 
     def encode_y(self, df):
+        # Get the labels
         y = df['label'].values
+
+        # One-hot encoding
         return to_categorical(y, num_classes=10)
 
 
 class FeedForwardNeuralNetworkEncoder(Encoder):
+    """Encoder class for FeedForwardNeuralNetworkModel."""
 
     def __init__(self):
-        super().__init__()
+        super(FeedForwardNeuralNetworkEncoder, self).__init__()
 
     def encode_X(self, df):
+        # Remove the label from the data frame
         try:
             df_without_label = df.drop(labels=['label'], axis=1)
         except ValueError:
             df_without_label = df
 
+        # Transform the data frame into a numpy array
         X = df_without_label.values
         
         # normalize the values between 0.0 and 1.0
@@ -67,5 +82,8 @@ class FeedForwardNeuralNetworkEncoder(Encoder):
         return X
 
     def encode_y(self, df):
+        # Get the labels
         y = df['label'].values
+
+        # One-hot encoding
         return to_categorical(y, num_classes=10)

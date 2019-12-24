@@ -19,7 +19,7 @@ model_type_to_encoder_cls = {
 
 
 def main(model_type, model_filepath, test_filepath, submission_filepath):
-    # get the model class and the encoder class from the model type
+    # Get the classes corresponding to the model type
     try:
         model_cls = model_type_to_model_cls[model_type]
         encoder_cls = model_type_to_encoder_cls[model_type]
@@ -27,20 +27,25 @@ def main(model_type, model_filepath, test_filepath, submission_filepath):
         print('Unrecognized model type: {}'.format(model_type), file=sys.stderr)
         return
 
+    # Load the trained model from disk
     print('Load the model...')
     model = model_cls.load(model_filepath)
 
+    # Load the test data
     print('Read the test data...')
     test_df = pd.read_csv(test_filepath, sep=',', encoding='utf-8')
 
+    # Encode the data
     print('Encode the test data...')
     encoder = encoder_cls()
     X_test = encoder.encode_X(test_df)
 
+    # Get the predicted digits
     print('Make the predictions...')
     y_pred = model.predict(X_test)
     y_pred = y_pred.argmax(axis=1)
 
+    # Create the Kaggle submission file and save it on disk
     print('Create the submission file...')
     submission_df = {'ImageId': range(1, len(y_pred) + 1), 'Label': y_pred}
     submission_df = pd.DataFrame(submission_df)[['ImageId', 'Label']]

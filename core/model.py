@@ -69,6 +69,26 @@ class KerasModel(Model):
 
 
 class CNNKerasModel(KerasModel):
+    """A Convolutional Neural Network model.
+
+    It consists of a sequence of convolutional layers followed by one
+    fully-connected layer.
+
+    Args:
+        filters_list (list): the filters of the convolutional layers. The length
+                             of the list corresponds to the number of
+                             convolutional layers.
+        kernels_sizes (list): the kernel sizes of the convolutional layers. The
+                              length of the list corresponds to the number of
+                              convolutional layers.
+        batch_normalization (bool): perform batch normalization if True, not otherwise.
+        n_dense_units (int): number of units in the dense layer.
+        conv_dropout (float): the value of the dropout during training used in the
+                              convolutional layers.
+        dense_dropout (float): the value of the dropout during training used in the
+                               dense layer.
+
+    """
 
     @staticmethod
     def load(filepath):
@@ -200,6 +220,18 @@ class CNNKerasModel(KerasModel):
 
 
 class FeedForwardNeuralNetworkModel(KerasModel):
+    """A Feedforward Neural Network model.
+
+    It consists of a sequence of fully connected layers.
+
+    Args:
+        n_hidden_layers (int): the number of dense layers in the network, in addition to
+                               the input and output layers.
+        n_units_in_hidden_layers (int): the number of units in each hidden layer.
+        activation_function (str): the activation function to use in the hidden layers.
+        dropout (float): the value of the dropout in the hidden layers to use during training.
+
+    """
 
     @staticmethod
     def load(filepath):

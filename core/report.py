@@ -5,13 +5,19 @@ import matplotlib.pyplot as plt
 
 
 class Report(ABC):
+    """Base class for all reports.
+
+    A report can be saved on disk, loaded, and it contains
+    information relevant to the task, such as the loss at
+    each epoch for a training report.
+    """
 
     @classmethod
     def load(cls, filepath):
         return cls.load(filepath)
 
     def __init__(self):
-        super().__init__()
+        super(Report, self).__init__()
 
     @abstractmethod
     def save(self, filepath):
